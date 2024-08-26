@@ -19,7 +19,7 @@ if [ "${SCENARIO_CLOUD_PROVIDER}" == "docker" ]; then
 
     log "Application pre-installed. Starting."
 
-elif [ "${SCENARIO_CLOUD_PROVIDER}" == "aws" ]; then
+elif [ "${SCENARIO_CLOUD_PROVIDER}" == "aws" ] || [ "${SCENARIO_CLOUD_PROVIDER}" == "hcloud" ]; then
     ## [ ] [test] check if still works in AWS
 
     header2 "Upgrading Application."

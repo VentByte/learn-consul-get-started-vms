@@ -172,6 +172,10 @@ else
     
       SSH_CERT="../infrastructure/aws/certs/id_rsa.pem"
 
+    elif [ "${SCENARIO_CLOUD_PROVIDER}" == "hcloud"]; then
+
+      SSH_CERT="../infrastructure/hcloud/certs/id_rsa.pem"
+
     else 
       log_err "Cloud provider $SCENARIO_CLOUD_PROVIDER is unsupported...exiting."
       exit 245
@@ -196,6 +200,10 @@ fi
 
 ## Comma separates string of prerequisites
 PREREQUISITES="docker,wget,jq,grep,sed,tail,awk"
+
+if [ "${SCENARIO_CLOUD_PROVIDER}" == "hcloud" ]; then
+  PREREQUISITES="$PREREQUISITES,yq"
+fi
 
 # ++-----------------+
 # || Begin           |

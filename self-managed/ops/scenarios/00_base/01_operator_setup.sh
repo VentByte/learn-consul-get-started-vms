@@ -82,6 +82,27 @@ EOT
     log "Starting monitoring suite on Bastion Host"
     bash "${SCENARIO_OUTPUT_FOLDER}start_monitoring_suite.sh"
 
+  elif [ "${SCENARIO_CLOUD_PROVIDER}" == "hcloud" ]; then
+    log "Cloud provider is: $SCENARIO_CLOUD_PROVIDER"
+
+    # Reference: https://docs.hetzner.cloud/#server-metadata
+    export PROMETHEUS_URI=$(curl -s http://169.254.169.254/hetzner/v1/metadata/private-networks | yq '.[0].ip')
+    export GRAFANA_URI=$(curl -s http://169.254.169.254/hetzner/v1/metadata/public-ipv4)
+    export LOKI_URI=$(curl -s http://169.254.169.254/hetzner/v1/metadata/private-networks | yq '.[0].ip')
+
+    log "Configuring DNS for monitoring suite"
+    
+    # sudo cat <<EOT >> /etc/hosts
+    sudo tee -a /etc/hosts > /dev/null <<EOT
+
+# The following lines are used by the monitoring suite
+${PROMETHEUS_URI} mimir loki prometheus
+${GRAFANA_URI} grafana
+EOT
+
+    log "Starting monitoring suite on Bastion Host"
+    bash "${SCENARIO_OUTPUT_FOLDER}start_monitoring_suite.sh"
+
   else 
     log_err "Cloud provider $SCENARIO_CLOUD_PROVIDER is unsupported...exiting."
     exit 245

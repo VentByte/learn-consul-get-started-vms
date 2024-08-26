@@ -66,7 +66,7 @@ for i in `seq 0 "$((SERVER_NUMBER-1))"`; do
                                   sudo chown 1000:1000 ${CONSUL_DATA_DIR} && \
                                   sudo chmod g+w ${CONSUL_DATA_DIR}" 
 
-  elif [ "${SCENARIO_CLOUD_PROVIDER}" == "aws" ]; then
+  elif [ "${SCENARIO_CLOUD_PROVIDER}" == "aws" ] || [ "${SCENARIO_CLOUD_PROVIDER}" == "hcloud" ]; then
     ## [ ] [test] check if still works in AWS
 
     ## [mark] this thing is ugly. Debug and check paths

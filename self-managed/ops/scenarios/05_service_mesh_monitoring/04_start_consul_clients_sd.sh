@@ -164,7 +164,7 @@ header2 "[Optional] Change DNS for client agents"
 
     log_warn "Change DNS for Docker is not yer supported. Use Docker DNS."
 
-  elif [ "${SCENARIO_CLOUD_PROVIDER}" == "aws" ]; then
+  elif [ "${SCENARIO_CLOUD_PROVIDER}" == "aws" ] || [ "${SCENARIO_CLOUD_PROVIDER}" == "hcloud" ]; then
     ## [ ] [test] check if still works in AWS
 
     for node in ${NODES_ARRAY[@]}; do
